@@ -98,6 +98,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
       return itemElement;
     }
+
+    placeOrder() {
+      if (this.items.length === 0) {
+        alert("Votre panier est vide. Ajoutez des articles avant de commander.");
+        return;
+      }
+
+      const total = this.getTotal();
+      alert(`Votre commande a été validée ! Total à payer: XOF ${total}`);
+      this.clearCart();  
+    }
+
+    clearCart() {
+      this.items = [];
+      this.renderCart();
+    }
   }
 
   const cart = new ShoppingCart();
@@ -110,4 +126,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   products.forEach(product => cart.addItem(product, product.id === 1 ? 5 : 2));
   cart.renderCart();
+
+  // Ajouter un écouteur d'événement sur le bouton "Commander"
+  document.querySelector(".orderButton").addEventListener("click", () => {
+    cart.placeOrder(); 
+  });
 });
+
